@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Login.Models.Project>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_SideNav.cshtml";
+}
+
+
+<div class="container-fluid">
+    <p>
+        <a class="btn btn-outline-primary btn-sm" asp-action="Create">Add Project</a>
+    </p>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered" id="project-table">
+                        <thead>
+                            <tr>
+                                <th>Project Name</th>
+                                <th>Project Description</th>
+                                <th width="150px">Manage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Description</td>
+                                    <td>
+                                        <div>
+                                            @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+                                            {
+                                                <a class="fas fa-edit btn btn-primary" asp-action="Edit" asp-route-id="@item.ProjectID"></a>
+                                                <a class="fas fa-info-circle btn btn-info" asp-action="Detail" asp-route-id="@item.ProjectID"></a>
+                                                <a onClick="showModal('@Url.Action("Delete", "Projects", new { id = item.ProjectID }, Context.Request.Scheme)','Delete Project')"
+                                                   class="fas fa-trash btn btn-danger"></a>
+                                            }
+                                            @if (User.IsInRole("Manager"))
+                                            {
+                                                <a class="fas fa-edit btn btn-primary" asp-action="Edit" asp-route-id="@item.ProjectID"></a>
+                                                <a class="fas fa-info-circle btn btn-info" asp-action="Detail" asp-route-id="@item.ProjectID"></a>
+                                                <a onClick="showModal('@Url.Action("Delete", "Projects", new { id = item.ProjectID }, Context.Request.Scheme)','Delete Project')"
+                                                   class="fas fa-trash btn btn-danger disabled"></a>
+                                            }
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="form-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+
+@section Scripts{
+    <script type="text/javascript">
+        var ticketTable = document.getElementById("project-table");
+        console.log(ticketTable);
+
+        $(document).ready(function () {
+            $('#project-table').DataTable();
+        });
+
+        showModal = (url, title) => {
+            $.ajax({
+                type: "GET",
+                url, url,
+                success: function (res) {
+                    $('#form-modal .modal-body').html(res);
+                    $('#form-modal .modal-title').html(title);
+                    $('#form-modal').modal('show');
+                }
+            });
+        }
+    </script>
+}
+

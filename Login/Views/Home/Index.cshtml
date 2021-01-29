@@ -1,0 +1,341 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_SideNav.cshtml";
+}
+
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<!-- Begin Page Content -->
+
+<div class="container-fluid">
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+        </div>
+
+
+        <!-- Display a list of Tickets Begins Here -->
+        <!-- Content Row -->
+        <div class="row">
+
+            <!-- Tickets Pie Chart -->
+            <div class="col-xl-4 col-lg-5">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">All Tickets By Priority</h6>
+
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-pie pt-4 pb-2">
+                            <canvas id="ticketPriorityChart"></canvas>
+                        </div>
+                        <div class="mt-4 text-center small">
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-primary"></i> Low
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-success"></i> Average
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-info"></i> Pending
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle" style="color:#b0b555;"></i> High
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-danger"></i> Critical
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tickets Pie Chart -->
+            <div class="col-xl-4 col-lg-5">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">All Tickets By Type</h6>
+
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-pie pt-4 pb-2">
+                            <canvas id="ticketTypeChart"></canvas>
+                        </div>
+                        <div class="mt-4 text-center small">
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-primary"></i> Event
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-success"></i> Incident
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-info"></i> Alert
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle" style="color:#b0b555;"></i> Request
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tickets by status Chart -->
+            <div class="col-xl-4 col-lg-5">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">All Tickets By Status</h6>
+
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-pie pt-4 pb-2">
+                            <canvas id="ticketStatusChart"></canvas>
+                        </div>
+                        <div class="mt-4 text-center small">
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-primary"></i> Open
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-success"></i> Completed
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-info"></i> Closed
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-danger"></i> New
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <!-- Dropdown Card -->
+            <div class="col-xl-8 col-lg-7">
+
+                <div class="card shadow mb-4">
+
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Tickets</h6>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                 aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header">Tickets:</div>
+                                <a class="dropdown-item" href="/Tickets/Index">View All Tickets</a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <!-- Table Begins Here -->
+                        <div class="table">
+                            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered dataTable" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 70px;">Ticket No</th>
+                                                <th style="width: 200px;">Title</th>
+                                                <th style="width: 72px;">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var ticket in ViewBag.Tickets)
+                                            {
+                                                <tr>
+                                                    <td>@ticket.Id</td>
+                                                    <td>@ticket.Title</td>
+                                                    <td>@ticket.TicketStatus</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- Table Ends Here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-lg-5">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            @foreach (var project in ViewBag.Projects)
+                            {
+                                <li class="list-group-item">@project.Name</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Display a list of Tickets Ends Here -->
+
+        <!-- -->
+
+    }
+
+    else
+    {
+        <!-- Page Heading -->
+        <div>
+            <h1 class="h3 text-gray-800">Dashboard</h1>
+            <p class=" text-gray-800">Please login or register to use this app</p>
+        </div>
+    }
+
+</div>
+
+<!-- End Page Content -->
+
+
+<!-- Chart.js -->
+<script src="~/vendor/chart.js/Chart.min.js"></script>
+
+
+<!-- Ticket Charts-->
+<script>
+    // Set new default font family and font color to mimic Bootstrap's default styling
+    Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+    Chart.defaults.global.defaultFontColor = '#858796';
+
+    var requestsCount = @Json.Serialize(ViewBag.Requests);
+    var alertsCount = @Json.Serialize(ViewBag.Alerts);
+    var eventsCount = @Json.Serialize(ViewBag.Events);
+    var incidentsCount = @Json.Serialize(ViewBag.Incidents);
+
+    var completedTicket = @Json.Serialize(ViewBag.Completed);
+    var closedTicket = @Json.Serialize(ViewBag.Closed);
+    var openTicket = @Json.Serialize(ViewBag.Open);
+    var newTicket = @Json.Serialize(ViewBag.New);
+
+    var highs = @Json.Serialize(ViewBag.Highs);
+    var lows = @Json.Serialize(ViewBag.Lows);
+    var averages = @Json.Serialize(ViewBag.Averages);
+    var criticals = @Json.Serialize(ViewBag.Criticals);
+    var pendings = @Json.Serialize(ViewBag.Pendings);
+
+    // Ticket type chart
+    var el = document.getElementById("ticketTypeChart");
+    // Ticket status chart
+    var ctx = document.getElementById("ticketStatusChart");
+    // Ticket priority chart
+    var pCtx = document.getElementById("ticketPriorityChart");
+
+    var myTicketChart = new Chart(el, {
+        type: 'doughnut',
+        data: {
+            labels: ["Event", "Incident", "Alert", "Request"],
+            datasets: [{
+                data: [eventsCount, incidentsCount, alertsCount, requestsCount],
+                backgroundColor: ['#4e73df', '#36b9cc', '#de1709', '#b0b555'],
+                hoverBackgroundColor: ['#2e59d9', '#2c9faf', '#800e06', '#969c35'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+            },
+            legend: {
+                display: true
+            },
+            cutoutPercentage: 80
+        },
+    });
+    var myStatusChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ["Open", "Completed", "Closed", "New"],
+            datasets: [{
+                data: [openTicket, completedTicket, closedTicket, newTicket],
+                backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#de1709'],
+                hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#800e06'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+            },
+            legend: {
+                display: true
+            },
+            cutoutPercentage: 80,
+        },
+    });
+    var myStatusChart = new Chart(pCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ["Low", "Average", "Pending", "Critical", "High"],
+            datasets: [{
+                data: [lows, averages, pendings, criticals, highs],
+                backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#de1709', '#b0b555'],
+                hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#800e06', '#969c35'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+            },
+            legend: {
+                display: true
+            },
+            cutoutPercentage: 80,
+        },
+    });
+
+</script>
+

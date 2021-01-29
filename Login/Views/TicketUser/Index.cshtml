@@ -1,0 +1,60 @@
+﻿@using Login.Models
+@model List<Ticket>
+
+@{
+    Layout = "~/Views/Shared/_SideNav.cshtml";
+    ViewData["Title"] = "Ticket List";
+}
+
+<!-- Being Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Tickets</h1>
+    </div>
+
+    <!-- Display a list of Tickets Begins Here -->
+    <!-- Content Row -->
+    <div class="row">
+
+        <div class="col-lg-12">
+            <!-- Default Card Example -->
+            <div class="card">
+                <div class="card-header">
+                    All Tickets
+                </div>
+                @foreach (var ticket in ViewBag.Tickets)
+                {
+                    <div class="card-body">
+
+                        <!-- Card Example -->
+                        <div class="mb-2">
+                            <a href="/Ticket/UpdateTicket/@ticket.Id">
+                                <div class="card shadow h-50 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                    Ticket Number : @ticket.Id
+                                                </div>
+                                                <div class="text-xs font-weight-bold text-primary text-uppercase">Created By: @ticket.CreatedBy</div>
+                                                <div class="text-xs font-weight-bold text-primary text-uppercase">Created On: @ticket.CreatedDate</div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <div class="text-xs font-weight-bold text-primary text-uppercase">@ticket.TicketStatus</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- Display a list of Tickets Ends Here -->
+</div>
+
+<!-- End Page Content -->

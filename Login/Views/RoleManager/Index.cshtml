@@ -1,0 +1,44 @@
+﻿@model List<Microsoft.AspNetCore.Identity.IdentityRole>
+
+@{ 
+    ViewData["Title"] = "Role Manager";
+    Layout = "~/Views/Shared/_SideNav.cshtml";
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Role Manager</h6>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-action="AddRole" asp-controller="RoleManager">
+                        <div class="input-group">
+                            <input name="roleName" class="form-control">
+                            <button class="btn btn-info">Add New Role</button>
+                        </div>
+                    </form>
+                    <!-- Table to Display all of the roles -->
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var role in Model)
+                            {
+                                <tr>
+                                    <td>@role.Name</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

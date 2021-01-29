@@ -1,0 +1,151 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Create an Account";
+}
+
+<!-- bg-gradient-primary -->
+<div class="bg-gradient-primary" style="height: 100%; width: 100%; position: fixed;">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                            </div>
+
+                            <!-- Form begins here -->
+                            <form class="user" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+
+                                <div asp-validation-summary="All" class="text-danger"></div>
+
+                                <!-- Profile begins here -->
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="Input.FirstName" hidden></label>
+                                        <input type="text" class="form-control form-control-user" asp-for="Input.FirstName"
+                                               placeholder="First Name">
+                                        <span asp-validation-for="Input.FirstName" class="text-danger" hidden></span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label asp-for="Input.LastName" hidden></label>
+                                        <input type="text" class="form-control form-control-user" asp-for="Input.LastName"
+                                               placeholder="Last Name">
+                                        <span asp-validation-for="Input.LastName" class="text-danger" hidden></span>
+                                    </div>
+                                </div>
+
+                                <!-- Profile ends here -->
+                                <!-- Email input begins here -->
+                                <div class="form-group">
+                                    <label asp-for="Input.Email" hidden></label>
+                                    <input type="email" class="form-control form-control-user" asp-for="Input.Email"
+                                           placeholder="Email Address">
+                                    <span asp-validation-for="Input.Email" class="text-danger" hidden></span>
+                                </div>
+                                <!-- Email input ends here -->
+                                <!-- Passwords input begins here -->
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <label asp-for="Input.Password" hidden></label>
+                                        <input type="password" class="form-control form-control-user"
+                                               asp-for="Input.Password" placeholder="Password">
+                                        <span asp-validation-for="Input.Password" class="text-danger" hidden></span>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <label asp-for="Input.ConfirmPassword" hidden></label>
+                                        <input type="password" class="form-control form-control-user"
+                                               asp-for="Input.ConfirmPassword" placeholder="Repeat Password">
+                                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger" hidden></span>
+                                    </div>
+                                </div>
+                                <!-- Passwords input ends here -->
+                                <!-- Action buttons begin here -->
+                                <button type="submit" class="btn btn-primary btn-user btn-block">Register Account</button>
+
+                                <!--hr>
+                                <a href="index.html" class="btn btn-google btn-user btn-block">
+                                    <i class="fab fa-google fa-fw"></i> Register with Google
+                                </a>
+                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                                </a>
+                                <!-- Action buttons ends here -->
+                            </form>
+
+                            <!-- Form begins here -->
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" asp-page="./ForgotPassword">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" asp-page="./Login"
+                                   asp-route-returnUrl="@Model.ReturnUrl">Already have an account? Login!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Former Section-->
+<!--
+<div class="row">
+    <div class="col-md-4">
+        <form  >
+
+            <h4>Create a new account.</h4>
+
+            <hr />
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Input.FirstName"></label>
+                <input asp-for="Input.FirstName" class="form-control" />
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.LastName"></label>
+                <input asp-for="Input.LastName" class="form-control" />
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Register</button>
+
+        </form>
+    </div>
+</div>
+-->
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

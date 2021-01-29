@@ -1,0 +1,33 @@
+﻿@model Login.Models.Project
+@{
+    ViewData["Title"] = "Delete Project";
+}
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ProjectID" />
+        <input class="btn btn-outline-danger" type="submit" value="Delete" />
+    </form>
+
+    <p class="text-danger">Are you sure you want to delete this project?</p>
+
+</div>
+
+
+
+

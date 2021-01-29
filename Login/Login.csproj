@@ -1,0 +1,69 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-Login-76C74ED7-E4E1-4F63-90AB-83DC3B2F9F34</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20210106191655_initial migration.cs" />
+    <Compile Remove="Migrations\20210106191655_initial migration.Designer.cs" />
+    <Compile Remove="Migrations\20210106192042_initial migration.cs" />
+    <Compile Remove="Migrations\20210106192042_initial migration.Designer.cs" />
+    <Compile Remove="Migrations\20210106192636_init migration.cs" />
+    <Compile Remove="Migrations\20210106192636_init migration.Designer.cs" />
+    <Compile Remove="Migrations\20210108215747_AddedProjectEntity.cs" />
+    <Compile Remove="Migrations\20210108215747_AddedProjectEntity.Designer.cs" />
+    <Compile Remove="Migrations\20210108220705_AddedUsersProjectTicket.cs" />
+    <Compile Remove="Migrations\20210108220705_AddedUsersProjectTicket.Designer.cs" />
+    <Compile Remove="Migrations\20210108221340_InitCommit.cs" />
+    <Compile Remove="Migrations\20210108221340_InitCommit.Designer.cs" />
+    <Compile Remove="Migrations\20210108221921_InitCommit.cs" />
+    <Compile Remove="Migrations\20210108221921_InitCommit.Designer.cs" />
+    <Compile Remove="Migrations\20210108222139_AddedCommit.cs" />
+    <Compile Remove="Migrations\20210108222139_AddedCommit.Designer.cs" />
+    <Compile Remove="Migrations\20210109031014_InitialCommit.cs" />
+    <Compile Remove="Migrations\20210109031014_InitialCommit.Designer.cs" />
+    <Compile Remove="Migrations\20210109034530_InitCommit.cs" />
+    <Compile Remove="Migrations\20210109034530_InitCommit.Designer.cs" />
+    <Compile Remove="Migrations\20210109034727_SecondCommit.cs" />
+    <Compile Remove="Migrations\20210109034727_SecondCommit.Designer.cs" />
+    <Compile Remove="Migrations\20210109045747_InitiCommit.cs" />
+    <Compile Remove="Migrations\20210109045747_InitiCommit.Designer.cs" />
+    <Compile Remove="Migrations\20210109050013_InitiCommit.cs" />
+    <Compile Remove="Migrations\20210109050013_InitiCommit.Designer.cs" />
+    <Compile Remove="Migrations\20210109200845_InitCommit.cs" />
+    <Compile Remove="Migrations\20210109200845_InitCommit.Designer.cs" />
+    <Compile Remove="Migrations\20210110052224_InitCommit.cs" />
+    <Compile Remove="Migrations\20210110052224_InitCommit.Designer.cs" />
+    <Compile Remove="Migrations\20210110185613_InitCommit.cs" />
+    <Compile Remove="Migrations\20210110185613_InitCommit.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="MySql.Data" Version="8.0.22" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Factory\" />
+    <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\lib\bootstrap\" />
+    <Folder Include="wwwroot\lib\bootstrap\dist\js\" />
+    <Folder Include="wwwroot\lib\jquery-validation-unobtrusive\" />
+    <Folder Include="wwwroot\lib\jquery-validation\" />
+    <Folder Include="wwwroot\lib\jquery-validation\dist\" />
+    <Folder Include="wwwroot\lib\jquery\" />
+    <Folder Include="wwwroot\lib\jquery\dist\" />
+  </ItemGroup>
+
+</Project>

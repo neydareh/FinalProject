@@ -1,0 +1,78 @@
+﻿@model Login.ViewModels.AddTicketViewModel
+
+@{
+    ViewData["Title"] = "Create Ticket";
+    Layout = "~/Views/Shared/_SideNav.cshtml";
+
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-xl-4">
+            <div class="card shadow mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">Create New Ticket</h6>
+                </div>
+
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group">
+                            <label asp-for="ProjectID" class="control-label">Parent Project</label>
+                            <select asp-for="ProjectID" asp-items="Model.Projects" class="form-control"></select>
+                            <span asp-validation-for="ProjectID" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="AssignedToId" class="control-label">Assign to Developer</label>
+                            <select asp-for="AssignedToId" asp-items="Model.Users" class="form-control"></select>
+                            <span asp-validation-for="AssignedToId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Title" class="control-label"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label"></label>
+                            <textarea asp-for="Description" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="TicketStatus" class="control-label">Ticket Status</label>
+                            <select asp-for="TicketStatus" asp-items="Model.Status" class="form-control"></select>
+                            <span asp-validation-for="TicketStatus" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="TicketPriority" class="control-label">Ticket Priority</label>
+                            <select asp-for="TicketPriority" asp-items="Model.Priority" class="form-control"></select>
+                            <span asp-validation-for="TicketPriority" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Type" class="control-label">Ticket Type</label>
+                            <select asp-for="Type" asp-items="Model.TicketType" class="form-control"></select>
+                            <span asp-validation-for="Type" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                            <a asp-action="Index" class="btn btn-outline-info fa-pull-right">Back to List</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

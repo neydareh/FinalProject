@@ -1,0 +1,46 @@
+﻿@using Login.Models;
+@model Ticket
+
+@{
+    ViewData["Title"] = "Ticket Detail";
+    Layout = "~/Views/Shared/_SideNav.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-xl-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Ticket Details</h6>
+                </div>
+
+                <div class="card-body">
+                    <div>
+                        <dl class="row">
+                            <dt class="col-sm-4">Title</dt>
+                            <dd class="col-sm-8">@Model.Title</dd>
+
+                            <dt class="col-sm-4">Description</dt>
+                            <dd class="col-sm-8">@Model.Description</dd>
+
+                            <dt class="col-sm-4">Ticket Owner</dt>
+                            <dd class="col-sm-8">@Model.CreatedBy</dd>
+
+                            <dt class="col-sm-4">Creation Date</dt>
+                            <dd class="col-sm-8">@Model.CreatedDate</dd>
+
+                            <dt class="col-sm-4">Modified Date</dt>
+                            <dd class="col-sm-8">@Model.UpdatedDate</dd>
+
+                            <dt class="col-sm-4">Parent Project</dt>
+                            <dd class="col-sm-8">@ViewBag.ParentProject</dd>
+                        </dl>
+                    </div>
+                    <div>
+                        <a class="btn btn-outline-info" asp-action="Index">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

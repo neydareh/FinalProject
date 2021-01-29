@@ -1,0 +1,27 @@
+﻿@using Login.Models
+@model Ticket
+
+@{
+    ViewData["Title"] = "Delete Ticket";
+}
+
+<form method="post" asp-action="Delete">
+    <div asp-validation-summary="ModelOnly" class="text-danger">
+    </div>
+    <input hidden asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="Title" class="control-label"></label>
+        <input asp-for="Title" class="form-control" value="@Model.Title" disabled />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <textarea disabled asp-for="Description" class="form-control">@Model.Description</textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <p class="text-danger">Are you sure you want to delete this ticket</p>
+    <div class="form-group">
+        <input type="submit" value="Delete" class="btn btn-danger" />
+    </div>
+</form>
+

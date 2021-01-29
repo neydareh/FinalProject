@@ -1,0 +1,129 @@
+﻿@using Login.Models
+@model List<Login.Models.Ticket>
+
+@{
+    ViewData["Title"] = "Tickets";
+    Layout = "~/Views/Shared/_SideNav.cshtml";
+}
+
+
+<div class="container-fluid">
+    <p>
+        <a class="btn btn-outline-primary btn-sm" asp-controller="Tickets" asp-action="Create">Create New</a>
+    </p>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Tickets</h6>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered" id="ticket-table" width="100%">
+                        <thead>
+                            <tr>
+                                <th width="25px">No.</th>
+                                <th>Project</th>
+                                <th>Owner</th>
+                                <th>Title</th>
+                                <th>Status</th>
+                                <th>Updated At</th>
+                                <th>Developer</th>
+                                <th>Priority</th>
+                                <th>Type</th>
+                                <th width="100px">Manage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.ParentProject.Name</td>
+                                    <td>@item.CreatedBy </td>
+                                    <td>@item.Title</td>
+                                    <td>@item.TicketStatus</td>
+                                    <td>@item.UpdatedDate</td>
+                                    <td>@item.AssignedTo.FirstName @item.AssignedTo.LastName</td>
+                                    <td>@item.TicketPriority</td>
+                                    <td>@item.Type</td>
+                                    <td>
+                                        <div>
+                                            @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+                                            {
+                                                <a class="fas fa-edit btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id"></a>
+                                                <a class="fas fa-info-circle btn btn-info btn-sm" asp-action="Detail" asp-route-id="@item.Id"></a>
+                                                <a onClick="showModal('@Url.Action("Delete", "Tickets", new { id = item.Id }, Context.Request.Scheme)','Delete Ticket')"
+                                                   class="fas fa-trash btn btn-danger btn-sm"></a>
+                                            }
+                                            @if (!(User.IsInRole("SuperAdmin") || User.IsInRole("Admin")))
+                                            {
+                                                @if (User.IsInRole("Basic"))
+                                                {
+                                                    <a class="fas fa-edit btn btn-primary btn-sm disabled" asp-action="Edit" asp-route-id="@item.Id"></a>
+                                                    <a class="fas fa-info-circle btn btn-info btn-sm" asp-action="Detail" asp-route-id="@item.Id"></a>
+                                                }
+                                                @if (User.IsInRole("Manager"))
+                                                {
+                                                    <a class="fas fa-edit btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id"></a>
+                                                    <a class="fas fa-info-circle btn btn-info btn-sm" asp-action="Detail" asp-route-id="@item.Id"></a>
+                                                }
+                                                @if (ViewBag.Fullname == item.CreatedBy)
+                                                {
+                                                    <a onClick="showModal('@Url.Action("Delete", "Tickets", new { id = item.Id }, Context.Request.Scheme)','Delete Ticket')"
+                                                       class="fas fa-trash btn btn-danger btn-sm"></a>
+                                                }
+                                            }
+
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="form-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>
+
+@section Scripts{
+    <script type="text/javascript">
+        var ticketTable = document.getElementById("ticket-table");
+        console.log(ticketTable);
+
+        $(document).ready(function () {
+            $('#ticket-table').DataTable();
+        });
+
+        showModal = (url, title) => {
+            $.ajax({
+                type: "GET",
+                url, url,
+                success: function (res) {
+                    $('#form-modal .modal-body').html(res);
+                    $('#form-modal .modal-title').html(title);
+                    $('#form-modal').modal('show');
+                }
+            });
+        }
+    </script>
+}
+
