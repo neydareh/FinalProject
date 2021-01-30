@@ -31,11 +31,11 @@ namespace Login
 
                     var config = services.GetRequiredService<IConfiguration>();
 
-                    await ContextSeed.SeedRoleAsync(userManager, roleManager);
+                    await ContextSeed.SeedRoleAsync(roleManager);
 
 
                     var pwd = config["SuperAdmin"];
-                    await ContextSeed.SeedSuperAdminAsync(userManager, roleManager, pwd);
+                    await ContextSeed.SeedSuperAdminAsync(userManager, pwd);
                 }
                 catch (Exception ex)
                 {

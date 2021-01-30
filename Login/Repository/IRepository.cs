@@ -13,12 +13,15 @@ namespace Login.Repository
         public void CreateNewTicket(Ticket ticket);
         public void EditTicket(Ticket ticket);
         public void DeleteTicket(Ticket ticket);
+        public List<Ticket> GetTicketCount(int? id);
         #endregion
 
         #region Projects
         public List<Project> GetAllProjects();
-        public Project GetProject(int id);
+        public Project GetProject(int? id);
         public void CreateNewProject(Project project);
+        public void EditProject(Project project);
+        public void DeleteProject(Project project);
         #endregion
 
         #region Users

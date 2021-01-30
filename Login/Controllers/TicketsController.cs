@@ -1,11 +1,8 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Login.Data;
 using Login.Models;
 using Login.ViewModels;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Login.Repository;
 
@@ -15,16 +12,12 @@ namespace Login.Controllers
     public class TicketsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IRepository _repo;
         
 
-        public TicketsController(ApplicationDbContext context, 
-            UserManager<ApplicationUser> userManager,
-            IRepository repo)
+        public TicketsController(ApplicationDbContext context, IRepository repo)
         {
             _context = context;
-            _userManager = userManager;
             _repo = repo;
         }
 
@@ -44,7 +37,6 @@ namespace Login.Controllers
             var ticketViewModel = new AddTicketViewModel(projects, developers);
             return View(ticketViewModel);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAsync(AddTicketViewModel ticketViewModel)
@@ -71,7 +63,6 @@ namespace Login.Controllers
             return View(ticketViewModel);
         }
 
-
         [HttpGet]
         public IActionResult Edit(int? id)
         {
@@ -96,7 +87,6 @@ namespace Login.Controllers
             };
             return View(ticketViewModel);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(AddTicketViewModel ticketViewModel)
@@ -124,7 +114,6 @@ namespace Login.Controllers
             var ticket = _repo.GetTicket(id);
             return View(ticket);
         }
-
         [HttpPost]
         public IActionResult Delete(Ticket ticket)
         {
@@ -136,7 +125,7 @@ namespace Login.Controllers
         public IActionResult Detail(int? id)
         {
             var ticket = _repo.GetTicket(id);
-            ViewBag.ParentProject = _context.Project.Find(ticket.ProjectID).Name;
+            ViewBag.ParentProject = _repo.GetProject(ticket.ProjectID).Name;
             ViewBag.CreatedDate = ticket.CreatedDate;
             ViewBag.UpdatedDate = ticket.UpdatedDate;
             return View(ticket);

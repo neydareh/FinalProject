@@ -47,21 +47,37 @@ namespace Login.Repository
             _context.Ticket.Update(ticketToEdit);
             _context.SaveChanges();
         }
+        public List<Ticket> GetTicketCount(int? id)
+        {
+            return _context.Ticket.Where(t => t.ProjectID == id).ToList();
+        }
 
 
+        #region Project
         public List<Project> GetAllProjects()
         {
             return _context.Project.ToList();
         }
-        public Project GetProject(int id)
+        public Project GetProject(int? id)
         {
             return _context.Project.Where(p => p.ProjectID == id).FirstOrDefault();
         }
-
         public void CreateNewProject(Project project)
         {
-            throw new NotImplementedException();
+            _context.Project.Add(project);
+            _context.SaveChanges();
         }
+        public void DeleteProject(Project project)
+        {
+            _context.Project.Remove(project);
+            _context.SaveChanges();
+        }
+        public void EditProject(Project projectToEdit)
+        {
+            _context.Project.Update(projectToEdit);
+            _context.SaveChanges();
+        }
+        #endregion
 
 
         #region User
