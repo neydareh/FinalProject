@@ -20,6 +20,10 @@ namespace Login.Repository
             _context = context;
             _userManager = userManager;
         }
+        public Repository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         public List<Ticket> GetAllTickets()
         {

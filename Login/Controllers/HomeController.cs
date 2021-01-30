@@ -1,12 +1,9 @@
-﻿using Login.Data;
-using Login.Models;
+﻿using Login.Models;
 using Login.Repository;
-using Login.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Login.Controllers
 {

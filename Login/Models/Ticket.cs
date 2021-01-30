@@ -1,5 +1,4 @@
 ﻿using Login.Data;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Login.Models
@@ -21,5 +20,10 @@ namespace Login.Models
         [MaxLength(450)]
         public string AssignedToId { get; set; }
         public ApplicationUser AssignedTo { get; set; }
+
+        public override string ToString()
+        {
+            return $"Id: {Id}, Created By: {CreatedBy}, Title:{Title}, Desc: {Description}";
+        }
     }
 }
