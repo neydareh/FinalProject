@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Login.Repository;
+using Login.Data;
 
 namespace Login.Controllers
 {
@@ -15,11 +16,13 @@ namespace Login.Controllers
     {
         private readonly ILogger<ProjectsController> _logger;
         private readonly IRepository _repo;
+        private readonly ApplicationDbContext _context;
 
-        public ProjectsController(IRepository repo, ILogger<ProjectsController> logger)
+        public ProjectsController(IRepository repo, ILogger<ProjectsController> logger, ApplicationDbContext context)
         {
             _repo = repo;
             _logger = logger;
+            _context = context;
         }
 
         [HttpGet]
@@ -53,10 +56,10 @@ namespace Login.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DetailAsync(int? id)
+        public IActionResult Detail(int? id)
         {
-            var project = _repo.GetProject(id);
-            var tickets = _repo.GetAllTickets();
+            var project = _context.Project.Where(p => p.ProjectID == id).FirstOrDefault();
+            var tickets = _context.Ticket.Where(t => t.ProjectID == id).ToList();
             if (tickets.Count < 1)
             {
                 ViewBag.Dev = null;
@@ -68,15 +71,14 @@ namespace Login.Controllers
                 var developersDetail = new List<string>();
                 foreach (var developer in developersId)
                 {
-                    var fn = await _repo.FindUserByIdAsync(developer);
-                    //string fullName = $"{_context.User.Find(developer).FirstName} {fn.LastName}";
-                    //developersDetail.Add(fullName);
+                    string fullName = $"{_context.Users.Find(developer).FirstName} {_context.Users.Find(developer).LastName}";
+                    developersDetail.Add(fullName);
                 }
 
                 ViewBag.TicketsList = tickets;
                 ViewBag.Dev = developersDetail;
             }
-            ViewBag.TicketsCount = _repo.GetTicketCount(id);
+            ViewBag.TicketsCount = _context.Ticket.Where(t => t.ProjectID == id).ToList();
             return View(project);
         }
 
