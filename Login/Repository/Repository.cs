@@ -51,6 +51,58 @@ namespace Login.Repository
         {
             return _context.Ticket.Where(t => t.ProjectID == id).ToList();
         }
+        public int GetCountOfPendingTickets()
+        {
+            return GetAllTickets().Where(x => x.TicketPriority == Priority.Pending).Count();
+        }
+        public int GetCountOfAvgerageTickets()
+        {
+            return GetAllTickets().Where(x => x.TicketPriority == Priority.Average).Count();
+        }
+        public int GetCountOfLowTickets()
+        {
+            return GetAllTickets().Where(x => x.TicketPriority == Priority.Low).Count();
+        }
+        public int GetCountOfHighTickets()
+        {
+            return GetAllTickets().Where(x => x.TicketPriority == Priority.High).Count();
+        }
+        public int GetCountOfCriticalTickets()
+        {
+            return GetAllTickets().Where(x => x.TicketPriority == Priority.Critical).Count();
+        }
+        public int GetCountOfEventTickets()
+        {
+            return GetAllTickets().Where(x => x.Type == TicketType.Event).Count();
+        }
+        public int GetCountOfIncidentTickets()
+        {
+            return GetAllTickets().Where(x => x.Type == TicketType.Incident).Count();
+        }
+        public int GetCountOfAlertTickets()
+        {
+            return GetAllTickets().Where(x => x.Type == TicketType.Alert).Count();
+        }
+        public int GetCountOfRequestTickets()
+        {
+            return GetAllTickets().Where(x => x.Type == TicketType.Request).Count();
+        }
+        public int GetCountOfCompletedTickets()
+        {
+            return GetAllTickets().Where(x => x.TicketStatus == Status.Completed).Count();
+        }
+        public int GetCountOfOpenTickets()
+        {
+            return GetAllTickets().Where(x => x.TicketStatus == Status.Open).Count();
+        }
+        public int GetCountOfClosedTickets()
+        {
+            return GetAllTickets().Where(x => x.TicketStatus == Status.Closed).Count();
+        }
+        public int GetCountOfNewTickets()
+        {
+            return GetAllTickets().Where(x => x.TicketStatus == Status.New).Count();
+        }
 
 
         #region Project

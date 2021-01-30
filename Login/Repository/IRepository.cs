@@ -14,7 +14,21 @@ namespace Login.Repository
         public void EditTicket(Ticket ticket);
         public void DeleteTicket(Ticket ticket);
         public List<Ticket> GetTicketCount(int? id);
+        public int GetCountOfPendingTickets();
+        public int GetCountOfAvgerageTickets();
+        public int GetCountOfLowTickets();
+        public int GetCountOfHighTickets();
+        public int GetCountOfCriticalTickets();
+        public int GetCountOfEventTickets();
+        public int GetCountOfIncidentTickets();
+        public int GetCountOfAlertTickets();
+        public int GetCountOfRequestTickets();
+        public int GetCountOfCompletedTickets();
+        public int GetCountOfOpenTickets();
+        public int GetCountOfClosedTickets();
+        public int GetCountOfNewTickets();
         #endregion
+
 
         #region Projects
         public List<Project> GetAllProjects();
