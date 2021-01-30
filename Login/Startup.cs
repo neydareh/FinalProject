@@ -1,5 +1,6 @@
 using Login.Data;
 using Login.Models;
+using Login.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -28,6 +29,8 @@ namespace Login
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
+
+            services.AddTransient<IRepository, Repository.Repository>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

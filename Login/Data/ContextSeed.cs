@@ -18,7 +18,6 @@ namespace Login.Data
             await roleManager.CreateAsync(new IdentityRole(Data.Roles.Manager.ToString()));
             await roleManager.CreateAsync(new IdentityRole(Data.Roles.Basic.ToString()));
         }
-
         public static async Task SeedSuperAdminAsync (UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager, string superAdminPassword)
         {
