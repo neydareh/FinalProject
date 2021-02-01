@@ -5,6 +5,8 @@ using Login.Models;
 using Login.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Login.Repository;
+using System.Collections.Generic;
+using System;
 
 namespace Login.Controllers
 {

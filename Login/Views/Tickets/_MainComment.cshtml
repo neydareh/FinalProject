@@ -1,0 +1,10 @@
+﻿@model Login.ViewModels.CommentViewModel
+
+<div>
+    <form method="post" asp-controller="Tickets" asp-action="Comment" id="commentForm">
+        <input asp-for="TicketId" hidden />
+        <input asp-for="MainCommentId" hidden/>
+        <input asp-for="Message" />
+        <button type="submit" id="btnComment">Comment</button>
+    </form>
+</div>

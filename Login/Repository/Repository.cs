@@ -2,7 +2,6 @@
 using Login.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -25,6 +24,7 @@ namespace Login.Repository
             _context = context;
         }
 
+        #region Ticket
         public List<Ticket> GetAllTickets()
         {
            return _context.Ticket
@@ -34,7 +34,9 @@ namespace Login.Repository
         }
         public Ticket GetTicket(int? id)
         {
-            return _context.Ticket.Where(t => t.Id == id).FirstOrDefault();
+            return _context.Ticket
+                .Include(t => t.Comments)
+                .FirstOrDefault(t => t.Id == id);
         }
         public void CreateNewTicket(Ticket ticket)
         {
@@ -107,8 +109,7 @@ namespace Login.Repository
         {
             return GetAllTickets().Where(x => x.TicketStatus == Status.New).Count();
         }
-
-
+#endregion
         #region Project
         public List<Project> GetAllProjects()
         {
@@ -134,8 +135,6 @@ namespace Login.Repository
             _context.SaveChanges();
         }
         #endregion
-
-
         #region User
         public List<ApplicationUser> GetAllUsers()
         {
@@ -153,6 +152,13 @@ namespace Login.Repository
         public async Task<ApplicationUser> FindUserByIdAsync(string userId)
         {
             return await _userManager.FindByIdAsync(userId);
+        }
+        #endregion
+        #region Comment
+        public void CreateComment(MainComment comment)
+        {
+            _context.MainComments.Add(comment);
+            _context.SaveChangesAsync();
         }
         #endregion
 

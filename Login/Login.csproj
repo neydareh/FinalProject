@@ -38,6 +38,10 @@
     <Compile Remove="Migrations\20210110052224_InitCommit.Designer.cs" />
     <Compile Remove="Migrations\20210110185613_InitCommit.cs" />
     <Compile Remove="Migrations\20210110185613_InitCommit.Designer.cs" />
+    <Compile Remove="Migrations\20210131200951_AddedCommentSectionToTicket.cs" />
+    <Compile Remove="Migrations\20210131200951_AddedCommentSectionToTicket.Designer.cs" />
+    <Compile Remove="Migrations\20210131201116_AddedCommentSectionToTicket.cs" />
+    <Compile Remove="Migrations\20210131201116_AddedCommentSectionToTicket.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,6 +67,12 @@
     <Folder Include="wwwroot\lib\jquery-validation\dist\" />
     <Folder Include="wwwroot\lib\jquery\" />
     <Folder Include="wwwroot\lib\jquery\dist\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Tickets\_MainComment.cshtml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

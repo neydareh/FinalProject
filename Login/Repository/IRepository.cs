@@ -44,5 +44,9 @@ namespace Login.Repository
         public Task <string> GetCurrentUserFullNameAsync(ClaimsPrincipal User);
         public Task <ApplicationUser> FindUserByIdAsync(string userId);
         #endregion
+
+        #region Comments
+        public void CreateComment(MainComment comment);
+        #endregion
     }
 }
