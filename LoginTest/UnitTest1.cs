@@ -14,12 +14,13 @@ namespace LoginTest
         public void ShouldGetTicketById()
         {
             using var context = new ApplicationDbContext(DbOptionsFactory.DbContextOptions);
-            var expected = new Repository(context).GetTicket(29).ToString();
+            var expected = new Repository(context).GetTicket(25).ToString();
             var actual = new Ticket{ 
-                Id = 29,
+                Id = 25,
                 CreatedBy = "Janai Mitchell", 
-                Title = "Create a new github page", 
-                Description = "Create a new repository and migrate the legacy code into the new repository." }
+                Title = "Migrate local SQL database to Azure Cloud", 
+                Description = "I would love you to migrate your local SQL DB to the Azure cloud. Try practicing CD/CI pipeline. Thank you very much!!"
+            }
             .ToString();
             Assert.Equal(expected, actual);
         }
