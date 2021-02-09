@@ -17,8 +17,7 @@ namespace Login.Data
             await roleManager.CreateAsync(new IdentityRole(Roles.Manager.ToString()));
             await roleManager.CreateAsync(new IdentityRole(Roles.Basic.ToString()));
         }
-        public static async Task SeedSuperAdminAsync (UserManager<ApplicationUser> userManager, 
-            string superAdminPassword)
+        public static async Task SeedSuperAdminAsync (UserManager<ApplicationUser> userManager, string superAdminPassword)
         {
             //Seed SuperAdmin User
             var defaultUser = new ApplicationUser

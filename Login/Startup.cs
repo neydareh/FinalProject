@@ -24,14 +24,11 @@ namespace Login
         {
             services.AddDbContextPool<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("UsersConnection")));
-
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
-
-            services.AddTransient<IRepository, Repository.Repository>();
-
+            services.AddScoped<IRepository, Repository.Repository>();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

@@ -1,5 +1,4 @@
 ﻿@using Login.Models;
-@using Login.ViewModels;
 @model Ticket
 
 @{
@@ -44,44 +43,11 @@
             </div>
         </div>
         <div class="col-xl-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Comments</h6>
-                </div>
-
-                <div class="card-body">
-                    <ul class="list-group">
-                        @foreach (var comment in Model.Comments)
-                        {
-                            <li class="list-group-item">
-                                <strong>@comment.PostedBy</strong>
-                                <div>
-                                    @comment.Message
-                                </div>
-                                <strong>@comment.CreatedTime</strong>
-                            </li>
-                        }
-                    </ul>
-                    
-                </div>
-            </div>
+            
 
         </div>
      </div>
     <div class="row">
-        <div class="col-xl-6">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Add Comment</h6>
-                </div>
-
-                <div class="card-body">
-                    <form method="post" id="form-comment" asp-action="PostComment" asp-controller="Tickets">
-                        <input id="comment" type="text"/>
-                        <input type="submit" value="Add Comment"/>
-                    </form>
-                </div>
-            </div>
-        </div>
+        
     </div>
 </div>

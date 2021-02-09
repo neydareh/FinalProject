@@ -109,7 +109,7 @@ namespace Login.Repository
         {
             return GetAllTickets().Where(x => x.TicketStatus == Status.New).Count();
         }
-#endregion
+        #endregion
         #region Project
         public List<Project> GetAllProjects()
         {
@@ -155,11 +155,6 @@ namespace Login.Repository
         }
         #endregion
         #region Comment
-        public void CreateComment(MainComment comment)
-        {
-            _context.MainComments.Add(comment);
-            _context.SaveChangesAsync();
-        }
         #endregion
 
     }

@@ -28,8 +28,6 @@ namespace Login.Repository
         public int GetCountOfClosedTickets();
         public int GetCountOfNewTickets();
         #endregion
-
-
         #region Projects
         public List<Project> GetAllProjects();
         public Project GetProject(int? id);
@@ -37,16 +35,13 @@ namespace Login.Repository
         public void EditProject(Project project);
         public void DeleteProject(Project project);
         #endregion
-
         #region Users
         public List<ApplicationUser> GetAllUsers();
         public Task <ApplicationUser> GetCurrentUser(ClaimsPrincipal User);
         public Task <string> GetCurrentUserFullNameAsync(ClaimsPrincipal User);
         public Task <ApplicationUser> FindUserByIdAsync(string userId);
         #endregion
-
         #region Comments
-        public void CreateComment(MainComment comment);
         #endregion
     }
 }
