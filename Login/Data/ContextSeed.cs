@@ -8,19 +8,16 @@ namespace Login.Data
 {
     public class ContextSeed
     {
-        public static async Task SeedRoleAsync (UserManager<ApplicationUser> userManager, 
-            RoleManager<IdentityRole> roleManager)
+        public static async Task SeedRoleAsync (RoleManager<IdentityRole> roleManager)
         {
             //Seed Roles into Database
-            await roleManager.CreateAsync(new IdentityRole(Data.Roles.SuperAdmin.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Data.Roles.Admin.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Data.Roles.Developer.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Data.Roles.Manager.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Data.Roles.Basic.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(Roles.SuperAdmin.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(Roles.Admin.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(Roles.Developer.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(Roles.Manager.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(Roles.Basic.ToString()));
         }
-
-        public static async Task SeedSuperAdminAsync (UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager, string superAdminPassword)
+        public static async Task SeedSuperAdminAsync (UserManager<ApplicationUser> userManager, string superAdminPassword)
         {
             //Seed SuperAdmin User
             var defaultUser = new ApplicationUser
@@ -40,11 +37,11 @@ namespace Login.Data
                 if (user == null)
                 {
                     await userManager.CreateAsync(defaultUser, superAdminPassword);
-                    await userManager.AddToRoleAsync(defaultUser, Data.Roles.SuperAdmin.ToString());
-                    await userManager.AddToRoleAsync(defaultUser, Data.Roles.Admin.ToString());
-                    await userManager.AddToRoleAsync(defaultUser, Data.Roles.Manager.ToString());
-                    await userManager.AddToRoleAsync(defaultUser, Data.Roles.Developer.ToString());
-                    await userManager.AddToRoleAsync(defaultUser, Data.Roles.Basic.ToString());
+                    await userManager.AddToRoleAsync(defaultUser, Roles.SuperAdmin.ToString());
+                    await userManager.AddToRoleAsync(defaultUser, Roles.Admin.ToString());
+                    await userManager.AddToRoleAsync(defaultUser, Roles.Manager.ToString());
+                    await userManager.AddToRoleAsync(defaultUser, Roles.Developer.ToString());
+                    await userManager.AddToRoleAsync(defaultUser, Roles.Basic.ToString());
                 }
             }
         }

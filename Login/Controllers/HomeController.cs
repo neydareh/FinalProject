@@ -1,11 +1,9 @@
-﻿using Login.Data;
-using Login.Models;
-using Login.Utilities;
+﻿using Login.Models;
+using Login.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using System.Linq;
 
 namespace Login.Controllers
 {
@@ -13,40 +11,36 @@ namespace Login.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext _context;
+        private readonly IRepository _repo;
         
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, IRepository repo)
         {
             _logger = logger;
-            _context = context;
+            _repo = repo;
         }
 
         #region Actions
         public IActionResult Index()
         {
 
-            var tickets = _context.Ticket.ToList();
-            var projects = _context.Project.ToList();
+            ViewBag.Tickets = _repo.GetAllTickets();
+            ViewBag.Projects = _repo.GetAllProjects();
 
-            ViewBag.Pendings = tickets.Where(x => x.TicketPriority == Data.Priority.Pending).Count();
-            ViewBag.Averages = tickets.Where(x => x.TicketPriority == Data.Priority.Average).Count();
-            ViewBag.Lows = tickets.Where(x => x.TicketPriority == Data.Priority.Low).Count();
-            ViewBag.Highs = tickets.Where(x => x.TicketPriority == Data.Priority.High).Count();
-            ViewBag.Criticals = tickets.Where(x => x.TicketPriority == Data.Priority.Critical).Count();
+            ViewBag.Pendings = _repo.GetCountOfPendingTickets();
+            ViewBag.Averages = _repo.GetCountOfAvgerageTickets();
+            ViewBag.Lows = _repo.GetCountOfLowTickets();
+            ViewBag.Highs = _repo.GetCountOfHighTickets();
+            ViewBag.Criticals = _repo.GetCountOfCriticalTickets();
 
-            ViewBag.Events = tickets.Where(x => x.Type == Data.TicketType.Event).Count();
-            ViewBag.Incidents = tickets.Where(x => x.Type == Data.TicketType.Incident).Count();
-            ViewBag.Alerts = tickets.Where(x => x.Type == Data.TicketType.Alert).Count();
-            ViewBag.Requests = tickets.Where(x => x.Type == Data.TicketType.Request).Count();
+            ViewBag.Events = _repo.GetCountOfEventTickets();
+            ViewBag.Incidents = _repo.GetCountOfIncidentTickets();
+            ViewBag.Alerts = _repo.GetCountOfAlertTickets();
+            ViewBag.Requests = _repo.GetCountOfRequestTickets();
 
-            ViewBag.Completed = tickets.Where(x => x.TicketStatus == Data.Status.Completed).Count();
-            ViewBag.Open = tickets.Where(x => x.TicketStatus == Data.Status.Open).Count();
-            ViewBag.Closed = tickets.Where(x => x.TicketStatus == Data.Status.Closed).Count();
-            ViewBag.New = tickets.Where(x => x.TicketStatus == Data.Status.New).Count();
-
-
-            ViewBag.Projects = projects;
-            ViewBag.Tickets = tickets;
+            ViewBag.Completed = _repo.GetCountOfCompletedTickets();
+            ViewBag.Open = _repo.GetCountOfOpenTickets();
+            ViewBag.Closed = _repo.GetCountOfClosedTickets();
+            ViewBag.New = _repo.GetCountOfNewTickets();
 
             return View();
         }

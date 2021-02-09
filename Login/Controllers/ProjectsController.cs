@@ -1,31 +1,34 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Login.Data;
 using Login.Models;
 using Login.ViewModels;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using Login.Repository;
+using Login.Data;
 
 namespace Login.Controllers
 {
     [Authorize(Roles = "Manager, Admin, SuperAdmin")]
     public class ProjectsController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly ILogger<ProjectsController> _logger;
+        private readonly IRepository _repo;
+        private readonly ApplicationDbContext _context;
 
-        public ProjectsController(ApplicationDbContext context, ILogger<ProjectsController> logger)
+        public ProjectsController(IRepository repo, ILogger<ProjectsController> logger, ApplicationDbContext context)
         {
-            _context = context;
+            _repo = repo;
             _logger = logger;
+            _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public IActionResult Index()
         {
-            return View(await _context.Project.ToListAsync());
+            var projects = _repo.GetAllProjects();
+            return View(projects);
         }
 
         [HttpGet]
@@ -34,10 +37,9 @@ namespace Login.Controllers
             var project = new AddProjectViewModel();
             return View(project);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(AddProjectViewModel addProject)
+        public IActionResult Create(AddProjectViewModel addProject)
         {
             if (ModelState.IsValid)
             {
@@ -46,8 +48,7 @@ namespace Login.Controllers
                     Name = addProject.Name,
                     Description = addProject.Description
                 };
-                _context.Add(project);
-                await _context.SaveChangesAsync();
+                _repo.CreateNewProject(project);
                 return Redirect("/Projects");
             }
             return View(addProject);
@@ -84,33 +85,25 @@ namespace Login.Controllers
         [Authorize(Roles = "Admin, SuperAdmin")]
         public IActionResult Delete(int? id)
         {
-            var project = _context.Project.Find(id);
+            var project = _repo.GetProject(id);
             if (project == null)
             {
                 return Redirect("/404");
             }
             return View(project);
         }
-
-        [HttpGet]
-        [Route("/404")]
-        public IActionResult Error()
-        {
-            return View();
-        }
-
         [HttpPost]
-        public async Task<IActionResult> DeleteAsync(Project project)
+        public IActionResult Delete(Project project)
         {
-            _context.Remove(project);
-            await _context.SaveChangesAsync();
+            _repo.DeleteProject(project);
             return Redirect("/Projects");
         }
+
 
         [HttpGet]
         public IActionResult Edit(int? id)
         {
-            var project = _context.Project.Find(id);
+            var project = _repo.GetProject(id);
             var projectViewModel = new AddProjectViewModel 
             {
                 ProjectID = project.ProjectID,
@@ -119,24 +112,29 @@ namespace Login.Controllers
             };
             return View(projectViewModel);
         }
-
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(AddProjectViewModel projectViewModel)
         {
             if (ModelState.IsValid)
             {
-                var project = _context.Project
-                    .Where(x => x.ProjectID == projectViewModel.ProjectID)
-                    .FirstOrDefault();
+                var project = _repo.GetProject(projectViewModel.ProjectID);
                 project.Name = projectViewModel.Name;
                 project.Description = projectViewModel.Description;
 
-                _context.Update(project);
-                _context.SaveChanges();
+                _repo.EditProject(project);
 
                 return Redirect("/Projects");
             }
             return View(projectViewModel);
+        }
+
+
+        [HttpGet]
+        [Route("/404")]
+        public IActionResult Error()
+        {
+            return View();
         }
     }
 }
