@@ -13,13 +13,11 @@ namespace Login.Controllers
     [Authorize]
     public class TicketsController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly IRepository _repo;
         
 
-        public TicketsController(ApplicationDbContext context, IRepository repo)
+        public TicketsController( IRepository repo)
         {
-            _context = context;
             _repo = repo;
         }
 
@@ -48,6 +46,9 @@ namespace Login.Controllers
                 var ticketProject = _repo.GetProject(ticketViewModel.ProjectID);
                 var assignedUser = await _repo.FindUserByIdAsync(ticketViewModel.AssignedToId);
                 var currentUser = await _repo.GetCurrentUser(User);
+                
+                // Map the ticket to the ticketViewModel 
+                //TODO - use AutoMapper when refactoring
                 var ticket = new Ticket
                 {
                     Title = ticketViewModel.Title,
@@ -75,6 +76,7 @@ namespace Login.Controllers
             }
             var projects = _repo.GetAllProjects();
             var developers = _repo.GetAllUsers();
+
             var ticketViewModel = new AddTicketViewModel(projects, developers)
             {
                 Title = ticket.Title,

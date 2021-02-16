@@ -22,7 +22,13 @@ namespace Login.Controllers
         #region Actions
         public IActionResult Index()
         {
+            GetTicketsMetrics();
 
+            return View();
+        }
+
+        private void GetTicketsMetrics()
+        {
             ViewBag.Tickets = _repo.GetAllTickets();
             ViewBag.Projects = _repo.GetAllProjects();
 
@@ -41,10 +47,7 @@ namespace Login.Controllers
             ViewBag.Open = _repo.GetCountOfOpenTickets();
             ViewBag.Closed = _repo.GetCountOfClosedTickets();
             ViewBag.New = _repo.GetCountOfNewTickets();
-
-            return View();
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

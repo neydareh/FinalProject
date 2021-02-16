@@ -18,11 +18,14 @@ namespace Login.Controllers
             _roleManager = roleManager;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var roles = await _roleManager.Roles.ToListAsync();
             return View(roles);
         }
+
+
         [HttpPost]
         public async Task<IActionResult> AddRole(string roleName)
         {

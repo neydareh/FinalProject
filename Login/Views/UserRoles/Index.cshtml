@@ -1,5 +1,4 @@
-﻿@using Login.ViewModels
-@model List<UserRolesViewModel>
+﻿@model List<UserRolesViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -8,7 +7,7 @@
 
 
 <div class="container-fluid">
-    <h1>User Roles</h1>
+    <h1>User Manager</h1>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -16,7 +15,7 @@
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Roles</th>
-                <th>Action</th>
+                <th>Manage</th>
             </tr>
         </thead>
 
@@ -30,7 +29,7 @@
                     <td>@string.Join(" | ", user.Roles.ToList())</td>
                     <td>
                         <a class="btn btn-primary" asp-controller="UserRoles" asp-action="Manage"
-                           asp-route-userId="@user.UserID">Manage Roles</a>
+                           asp-route-userId="@user.UserID">Select Role</a>
                     </td>
                 </tr>
             }

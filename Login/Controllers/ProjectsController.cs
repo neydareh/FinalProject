@@ -39,7 +39,7 @@ namespace Login.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(AddProjectViewModel addProject)
+        public IActionResult Create([FromBody]AddProjectViewModel addProject)
         {
             if (ModelState.IsValid)
             {

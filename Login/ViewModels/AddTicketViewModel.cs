@@ -11,11 +11,13 @@ namespace Login.ViewModels
         public int Id { get; set; }
         public string CreatedBy { get; set; }
 
+
         [Required(ErrorMessage = "Ticket title is required")]
         public string Title { get; set; }
 
         [Required(ErrorMessage = "Ticket description is required")]
         public string Description { get; set; }
+
 
         [Required(ErrorMessage = "Ticket status is required")]
         public Status TicketStatus { get; set; }
@@ -49,11 +51,9 @@ namespace Login.ViewModels
         };
 
 
-
         [Required(ErrorMessage = "Project is required")]
         public int ProjectID { get; set; }
         public List<SelectListItem> Projects { get; set; }
-
 
 
         [Required(ErrorMessage = "Please assign ticket to Developer")]
