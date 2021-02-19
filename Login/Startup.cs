@@ -1,10 +1,6 @@
-using Login.Data;
-using Login.Models;
-using Login.Repository;
+using Login.Installers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,20 +18,7 @@ namespace Login
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContextPool<ApplicationDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("UsersConnection"));
-            });
-
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultUI()
-                .AddDefaultTokenProviders();
-
-            services.AddScoped<IRepository, Repository.Repository>();
-
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.InstallServicesInAssembly(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
