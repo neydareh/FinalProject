@@ -27,6 +27,7 @@ namespace Login.Controllers
         {
             var users = await _userManager.Users.ToListAsync();
             var userRolesList = new List<UserRolesViewModel>();
+
             foreach (var user in users)
             {
                 var thisViewModel = new UserRolesViewModel
