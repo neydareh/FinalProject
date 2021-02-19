@@ -23,12 +23,17 @@ namespace Login
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContextPool<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("UsersConnection")));
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("UsersConnection"));
+            });
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
+
             services.AddScoped<IRepository, Repository.Repository>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

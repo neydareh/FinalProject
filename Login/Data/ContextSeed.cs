@@ -17,6 +17,8 @@ namespace Login.Data
             await roleManager.CreateAsync(new IdentityRole(Roles.Manager.ToString()));
             await roleManager.CreateAsync(new IdentityRole(Roles.Basic.ToString()));
         }
+
+        // This should not go into production, only use once to seed SuperAdmin user to the database in test
         public static async Task SeedSuperAdminAsync (UserManager<ApplicationUser> userManager, string superAdminPassword)
         {
             //Seed SuperAdmin User
@@ -30,18 +32,21 @@ namespace Login.Data
                 PhoneNumberConfirmed = true
             };
 
-            //Check if the SuperAdmin is current in the Database
+            //Check if there is a SuperAdmin SuperAdmin is currently in the Database
             if (userManager.Users.All(u => u.Id != defaultUser.Id ))
             {
                 var user = await userManager.FindByEmailAsync(defaultUser.Email);
+
+                //If there's no SuperAdmin then create one using the IdentityUser details provided above
                 if (user == null)
                 {
                     await userManager.CreateAsync(defaultUser, superAdminPassword);
                     await userManager.AddToRoleAsync(defaultUser, Roles.SuperAdmin.ToString());
+                    /**
                     await userManager.AddToRoleAsync(defaultUser, Roles.Admin.ToString());
                     await userManager.AddToRoleAsync(defaultUser, Roles.Manager.ToString());
                     await userManager.AddToRoleAsync(defaultUser, Roles.Developer.ToString());
-                    await userManager.AddToRoleAsync(defaultUser, Roles.Basic.ToString());
+                    await userManager.AddToRoleAsync(defaultUser, Roles.Basic.ToString());**/
                 }
             }
         }
