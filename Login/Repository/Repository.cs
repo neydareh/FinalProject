@@ -2,6 +2,7 @@
 using Login.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -153,8 +154,45 @@ namespace Login.Repository
         {
             return await _userManager.FindByIdAsync(userId);
         }
+
         #endregion
+
         #region Comment
+        public async Task<bool> CreateComment(Comment comment)
+        {
+            if(comment == null)
+            {
+                return false;
+                
+            }
+            comment.CreatedTime = DateTime.Now;
+            await _context.Comments.AddAsync(comment);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteComment(int id)
+        {
+            var comment = await _context.Comments.SingleOrDefaultAsync(c => c.Id == id);
+            if (comment == null)
+            {
+                return false;
+            }
+            _context.Comments.Remove(comment);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<List<Comment>> GetAllComments(int ticketId)
+        {
+            return await _context.Comments.Where(c => c.TicketId == ticketId).ToListAsync();
+        }
+
+        public async Task<List<Comment>> GetAllComments()
+        {
+            return await _context.Comments.ToListAsync();
+        }
+
         #endregion
 
     }

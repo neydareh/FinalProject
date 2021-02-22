@@ -46,6 +46,7 @@ namespace Login.Data
         }
         public DbSet<Ticket> Ticket { get; set; }
         public DbSet<Project> Project { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         
     }
 }

@@ -13,10 +13,11 @@
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Ticket Details</h6>
                 </div>
-
                 <div class="card-body">
                     <div>
                         <dl class="row">
+                            <dd id="ticketNo" hidden>@Model.Id</dd>
+
                             <dt class="col-sm-4">Title</dt>
                             <dd class="col-sm-8">@Model.Title</dd>
 
@@ -24,7 +25,7 @@
                             <dd class="col-sm-8">@Model.Description</dd>
 
                             <dt class="col-sm-4">Ticket Owner</dt>
-                            <dd class="col-sm-8">@Model.CreatedBy</dd>
+                            <dd class="col-sm-8" id="user">@Model.CreatedBy</dd>
 
                             <dt class="col-sm-4">Creation Date</dt>
                             <dd class="col-sm-8">@Model.CreatedDate</dd>
@@ -43,11 +44,117 @@
             </div>
         </div>
         <div class="col-xl-6">
-            
-
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Add New Comment</h6>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="new-comment" />
+                        </div>
+                        <div class="form-group">
+                            <input id="btnPost" class="btn btn-success" type="submit" value="Add Comment" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-     </div>
+    </div>
     <div class="row">
-        
+        <div class="col-xl-12">
+            <div class="card shadow mb-4 overflow-auto">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Comments</h6>
+                </div>
+                <div>
+                    <div class="">
+                        <div class="card-body">
+                            <div id="comments"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var ticketId = document.getElementById("ticketNo").innerHTML;
+        Comment.GetAllCommentsByTicket(ticketId);
+    });
+    
+    var id = document.getElementById("ticketNo").innerHTML;
+    $("#btnPost").click(function () {
+        var message = $("#new-comment").val();
+        Comment.AddComment(id, message);
+    });
+
+    var Comment = {
+        AddComment: function (ticketId, message) {
+            var body = {
+                "ticketId": ticketId,
+                "message": message
+            };
+            var commentUrl = "https://localhost:44391/comments/add";
+            window.Comment.PostAPI(commentUrl, body, onSuccess, onFailed);
+            function onSuccess() {
+                window.alert("success adding comment");
+                setInterval('location.reload()', 100);
+            }
+            function onFailed(error) {
+                window.alert(error.message);
+            }
+        },
+        GetAllCommentsByTicket: function (id) {
+            var obj = "";
+            var commentUrl = "https://localhost:44391/comments/all/" + id;
+            window.Comment.GetAPI(commentUrl, onSuccess, onFailed);
+            function onSuccess(jsonData) {
+                obj = jsonData;
+                $.each(jsonData, function (i, comment) {
+                    var row ="<h5 class='font-weight-bold'>" + comment.postedBy + "</h5 >" + 
+                              "<p class='font-weight-light'>" + comment.message + "</p>" + "<hr>";
+                    $('#comments').append(row);
+                });
+            }
+            function onFailed(error) {
+                window.alert(error.statusText);
+            }
+
+            return obj;
+        },
+        GetAPI: function (commentUrl, successCallback, errorCallback) {
+            $.ajax({
+                type: "GET",
+                url: commentUrl,
+                dataType: "json",
+                success: successCallback,
+                error: errorCallback
+            });
+        },
+        PostAPI: function (commentUrl, body, successCallback, errorCallback) {
+            var id = parseInt(body.ticketId);
+            var messsage = body.message;
+            var newBody = {
+                "ticketId": id,
+                "message": messsage
+            };
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                url: commentUrl,
+                dataType: "json",
+                data: JSON.stringify(newBody),
+                success: successCallback,
+                error: errorCallback
+            });
+        }
+    }
+</script>

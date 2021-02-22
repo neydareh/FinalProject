@@ -36,12 +36,16 @@ namespace Login.Repository
         public void DeleteProject(Project project);
         #endregion
         #region Users
-        public List<ApplicationUser> GetAllUsers();
-        public Task <ApplicationUser> GetCurrentUser(ClaimsPrincipal User);
-        public Task <string> GetCurrentUserFullNameAsync(ClaimsPrincipal User);
-        public Task <ApplicationUser> FindUserByIdAsync(string userId);
+        List<ApplicationUser> GetAllUsers();
+        Task <ApplicationUser> GetCurrentUser(ClaimsPrincipal User);
+        Task <string> GetCurrentUserFullNameAsync(ClaimsPrincipal User);
+        Task <ApplicationUser> FindUserByIdAsync(string userId);
         #endregion
         #region Comments
+        Task<bool> CreateComment(Comment comment);
+        Task<bool> DeleteComment(int id);
+        Task<List<Comment>> GetAllComments(int ticketId);
+        Task<List<Comment>> GetAllComments();
         #endregion
     }
 }

@@ -1,12 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Login.Data;
 using Login.Models;
 using Login.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Login.Repository;
-using System.Collections.Generic;
-using System;
 
 namespace Login.Controllers
 {
